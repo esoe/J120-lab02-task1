@@ -1,6 +1,8 @@
 @startuml
 title "class-diagram: private Dictionary"
 class Runner{
+    Storage storage
+    Dictionary dictionary
     void hello()
     void main()
 }
@@ -22,8 +24,8 @@ interface UserFace{
 }
 class Dictionary{
     HashMap words
-    String text
-    dictionary(String[] text)
+    StringBuilder text
+    Dictionary()
 }
 
 @enduml
