@@ -19,24 +19,33 @@ public class Dictionary {
      * Массив строк text содержит исходный текст,<p>
      * прочитанный из файла переданного пользователем
      */
-    private String[] text;
+    private String text;
+
     /**
      * Список words хранит в качестве ключа слова, а в
      * качестве значения - количество повторений слова в тексте.
      * Слова в списке размещены в соответствии с очередностью появления в тексте
      */
     private HashMap<String, Integer> words;
-    public Dictionary(String[] text){
+
+    /**
+     * Основной конструктор словаря.
+     * @param text
+     */
+    public Dictionary(String text){
         setText(text);
     }
     
     /**
-     * метод осуществляет построение списка слов (words)
+     * метод осуществляет построение списка слов (words)<p>
+     * на основании содержимого text<p>
+     * - обработка текста<p>
+     * - передача результатов обработки в words<p>
      * @return
      */
     public Dictionary build(){
-        //обработка текста
-        //передача результатов обработки в words
+        String[] strings = text.sp
+        System.out.println(strings.length);
         return this;
     }
     /**
@@ -71,13 +80,13 @@ public class Dictionary {
     /**
      * @param text the text to set
      */
-    public void setText(String[] text) {
+    public void setText(String text) {
         this.text = text;
     }
     /**
      * @return the text
      */
-    public String[] getText() {
+    public String getText() {
         return text;
     }
     /**
