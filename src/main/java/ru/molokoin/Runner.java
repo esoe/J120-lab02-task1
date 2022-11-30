@@ -1,6 +1,7 @@
 package ru.molokoin;
 
 import java.io.File;
+import java.util.Map;
 
 public class Runner implements UserFace{
     public static void main(String[] args) {
@@ -13,9 +14,15 @@ public class Runner implements UserFace{
         System.out.println(text);
 
         //создаем новый словарь
-        Dictionary abc = new Dictionary(source);
+        Dictionary abc = new Dictionary(text);
+        //инициируем заполнение нового словаря
         abc.build();
-        
+        //пишем словарь  файл - пока консоль
+        for (Map.Entry entry : abc.getWords().entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue()); //надо в файл писать ..
+        }
+        System.out.println("Размер словаря: " + abc.getWords().size());
+
     }
     
 }
