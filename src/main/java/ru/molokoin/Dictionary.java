@@ -33,6 +33,7 @@ public class Dictionary {
      * @param text
      */
     public Dictionary(String text){
+        this.words = new HashMap<String, Integer>();
         setText(text);
     }
     
@@ -44,8 +45,27 @@ public class Dictionary {
      * @return
      */
     public Dictionary build(){
-        String[] strings = text.sp
-        System.out.println(strings.length);
+        //приводим текст к нижнему регистру
+        text = text.toLowerCase();
+        /**
+         * Удаляем знаки пунктуации.<p>
+         * Оставляем только буквы, пробелы и дефисы.<p>
+         * и знаки тире остались поидее, попадут как самостоятельные слова в словарь
+         */
+        text = text.replaceAll("[^а-яa-z -]+", "");
+        //разбиваем текст на слова - по пробелам
+        String[] words = text.split("[\\s]+");
+        System.out.println("Количество слов в тексте: " + words.length);
+        System.out.println("-----------------------------------------");
+        //пишем слова в список
+        for (String word : words) {
+            if (this.words.containsKey(word)){
+                Integer repeats = this.words.get(word);
+                this.words.put(word, ++repeats);
+            }else{
+                this.words.put(word, 1);
+            }
+        }
         return this;
     }
     /**
