@@ -1,6 +1,7 @@
 package ru.molokoin;
 
 import java.io.File;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
@@ -37,7 +38,6 @@ public class Runner implements UserFace{
          * и затем по ключу или по значению подставляем в выводе второй компонент
          */
         File fReportAlphabet = new File("storage\\fReportAlphabet.txt");
-        //String contentAlphabet = Dictionary.toString(Dictionary.getAlphabet(abc.getWords()));
         String contentAlphabet = "";
         TreeMap<String, Integer> tm = Dictionary.getAlphabet(abc.getWords());
         for (Entry<String, Integer> entry : tm.entrySet()) {
@@ -45,13 +45,26 @@ public class Runner implements UserFace{
         }
         Storage.put(contentAlphabet, fReportAlphabet);
 
-        // Пишем словарь в обратном порядке
-        // File fReportAlphabetReverse = new File("storage\\fReportAlphabetReverse.txt");
-        // String contentAlphabetReverse = Dictionary.toString(Dictionary.getAlphabetReverse(abc.getWords()));
+        // Пишем словарь в обратном порядке (сортировка по последней букве)
+        File fReportAlphabetReverse = new File("storage\\fReportAlphabetReverse.txt");
+        String contentAlphabetReverse = "";
+        tm = Dictionary.getAlphabetReverse(abc.getWords());
+        for (Entry<String, Integer> entry : tm.entrySet()) {
+            contentAlphabetReverse = contentAlphabetReverse + entry.getKey() + " : " + entry.getValue() + "\n";
+        }
+        Storage.put(contentAlphabetReverse, fReportAlphabetReverse);
 
-        // //пишем слова отсортированные в соответствии с частотой появления по тексту
-        // File fReportAlphabetFrequency = new File("storage\\fReportAlphabetFrequency.txt");
-        // String contentAlphabetFrequency = Dictionary.toString(Dictionary.getAlphabetFrequency(abc.getWords()));
+        //пишем слова отсортированные в соответствии с частотой появления по тексту
+        /**
+         * отсортировали по частоте появления, но нет сортировки по алфавиту среди слов с одинаковой частотой появления!
+         */
+        File fReportAlphabetFrequency = new File("storage\\fReportAlphabetFrequency.txt");
+        String contentAlphabetFrequency = "";
+        Map<String, Integer> m = Dictionary.getAlphabetFrequency(abc.getWords());
+        for (Entry<String, Integer> entry : m.entrySet()) {
+            contentAlphabetFrequency = contentAlphabetFrequency + entry.getKey() + " : " + entry.getValue() + "\n";
+        }
+        Storage.put(contentAlphabetFrequency, fReportAlphabetFrequency);
     }
     
 }

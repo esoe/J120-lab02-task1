@@ -1,9 +1,12 @@
 package ru.molokoin;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 /**
  * Класс формирует словарь из полученного от пользователя текста<p>
@@ -97,13 +100,21 @@ public class Dictionary {
     }
     /**
      * Статический метод, сортирует словарь попринципу обратного словаря<p>
-     * — словаря, в котором слова отсортированы не по начальным, а по конечным буквам.<p>
+     * — словаря, в котором слова отсортированы не по начальным, а по конечным буквам (перевернуты).<p>
      * В обратном словаре сначала перечисляются слова, заканчивающиеся на «а», потом на «б» и так далее
      * @param words
      * @return
      */
-    public static HashMap<String, Integer> getAlphabetReverse(HashMap<String, Integer> words){
-        return null;
+    public static TreeMap<String, Integer> getAlphabetReverse(HashMap<String, Integer> words){
+        HashMap<String, Integer> reverceWords = new HashMap<>();
+        String s;
+        Integer i;
+        for (Entry<String, Integer> entry : words.entrySet()) {
+            s = (String)entry.getKey();
+            i = (Integer)entry.getValue();
+            reverceWords.put(Word.reverce(s), i);
+        }
+        return new TreeMap<String, Integer>(reverceWords);
     }
 
     /**
@@ -112,9 +123,60 @@ public class Dictionary {
      * @param words
      * @return
      */
-    public static HashMap<String, Integer> getAlphabetFrequency(HashMap<String, Integer> words){
-        return null;
+    public static Map<String, Integer> getAlphabetFrequency(HashMap<String, Integer> words){
+        LinkedHashMap<String, Integer> sorted = new LinkedHashMap<String, Integer>();
+        /**
+         * Перечень уникальных значений частоты повторения слова в тексте
+         * Причем HashSet их автоматически отсортировал по возрастанию
+         */
+        HashSet<Integer> values = new HashSet<>(words.values());
+        for (Integer value : values) {
+            //создаем буфер, который будет содержать только слова с одинаковой частотой повторения
+            Map<String, Integer> buf = new HashMap<String, Integer>();
+            String currentKey;
+            Integer currentValue;
+            for (Entry<String, Integer> entry : words.entrySet()) {
+                currentKey = (String)entry.getKey();
+                currentValue = (Integer)entry.getValue();
+                if (currentValue == value){
+                    buf.put(currentKey, currentValue);
+                }
+            }
+            //сортируем буфер по ключу
+            TreeMap<String, Integer> tree = new TreeMap<>(buf);
+            /**
+             * Пишем буфер в LinkedHashMap, он никак не перемещает поля в списке,
+             * в какой последовательности пишем, так в последствии и отдает
+             */
+            for (Entry<String, Integer> entry : tree.entrySet()) {
+                currentKey = (String)entry.getKey();
+                currentValue = (Integer)entry.getValue();
+                if (currentValue == value){
+                    sorted.put(currentKey, currentValue);
+                }
+            }
+        }
+        return sorted;
     }
+    // /**
+    //  * сортировка списка по значениям
+    //  * на самом деле не понятно как это происходит, но работает. (не пригодилось в итоге)
+    //  * @param words
+    //  * @return
+    //  */
+    // public static Map<String, Integer> sortMap(HashMap<String, Integer> map){
+    //     Map<String, Integer> sorted = new HashMap<String, Integer>(map);
+    //     sorted = sorted.entrySet()
+    //                 .stream()
+    //                 .sorted(Map.Entry.comparingByValue())
+    //                 .collect(Collectors.toMap(
+    //                                     Map.Entry::getKey,
+    //                                     Map.Entry::getValue,
+    //                                     (oldValue, newValue) -> oldValue,
+    //                                     LinkedHashMap::new
+    //                 ));
+    //     return sorted;
+    // }
 
     /**
      * @param text the text to set
