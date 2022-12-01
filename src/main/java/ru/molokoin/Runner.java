@@ -12,7 +12,6 @@ public class Runner implements UserFace{
         /**
          * Задаем путь к файлу-источнику
          */
-        String source = "storage\\j120-lab2_пример файла для обработки.txt";//путь по умолчанию
         Console console = System.console();
         if (console == null) {
             System.err.println("Консоль не обнаружена ...");
@@ -20,7 +19,11 @@ public class Runner implements UserFace{
         }
         System.out.println("Для выхода из приложения введите команду: \\q");
         System.out.println("Для получения отчетов по результатам анализа текста укажите путь к источнику файла: ");
-        source = console.readLine();
+        /**
+         * TODO обработать случаи, когда пользователь ввел текст не являющимся адресом или командой выхода
+         * обрабтать исключения тут, а не в методе Storage.get()
+         */
+        String source = console.readLine();
         while (!source.equals("\\q")){
             System.out.println("Указано пользователем: " + source);
             //получаем данные из файла, для анализа
@@ -45,10 +48,6 @@ public class Runner implements UserFace{
              * для упорядочивания по возрастанию проце всего TreeMap
              * для остальных типов сортировки это будут другие варианты.
              * 
-             * если общий вариант,
-             * то получаем список Set элементов, по которым надо отсортировать перечень,
-             * сортируем его,
-             * и затем по ключу или по значению подставляем в выводе второй компонент
              */
             File fReportAlphabet = new File("storage\\fReportAlphabet.txt");
             String contentAlphabet = "";
@@ -80,9 +79,11 @@ public class Runner implements UserFace{
                 contentAlphabetFrequency = contentAlphabetFrequency + entry.getKey() + " : " + entry.getValue() + "\n";
             }
             Storage.put(contentAlphabetFrequency, fReportAlphabetFrequency);
+            System.out.println("-----------------------------------------");
             System.out.println("Укажите путь к следующему файлу ...");
             source = console.readLine();
         }
+        System.out.println("Вы вышли из программы ...");
         System.out.println("До новых встречь!!!");
     }
 }

@@ -66,7 +66,6 @@ public class Dictionary {
         //разбиваем текст на слова - по пробелам
         String[] words = text.split("[\\s]+");
         System.out.println("Количество слов в тексте: " + words.length);
-        System.out.println("-----------------------------------------");
         //пишем слова в список
         for (String word : words) {
             if (this.words.containsKey(word)){
