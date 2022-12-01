@@ -51,5 +51,6 @@ public class Storage {
             System.out.println("Файл по указанному пути отсутствует.");
             System.out.println(e.getMessage());
         }
+        System.out.println("Отчет размещен по адресу: " + targetFile.getAbsolutePath());
     }
 }
