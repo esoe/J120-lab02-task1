@@ -1,6 +1,9 @@
 package ru.molokoin;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 /**
  * Класс формирует словарь из полученного от пользователя текста<p>
@@ -42,6 +45,10 @@ public class Dictionary {
      * на основании содержимого text<p>
      * - обработка текста<p>
      * - передача результатов обработки в words<p>
+     * 
+     * Надо доделать:
+     * - разбиение строки на слова по переходам строки
+     * - разбиение строки на слова по знакам препинания (на случай, если пробел пропущен)
      * @return
      */
     public Dictionary build(){
@@ -70,11 +77,23 @@ public class Dictionary {
     }
     /**
      * Статический метод, сортирует словарь по алфавиту
+     * создаем новый список,
+     * пишем в него компоненты в алфавитной последовательности:
+     * - находим первое слово, для добавления в список
+     * - устанавливаем значение current
+     * - пишем current в новый список
+     * - удаляем поле из исходного списка (чтобы в следующий раз меноше перебирать)
+     * - сравниваем поэлементно current с оставшимися словами исходного списка, находим следующее .. 
+     * 
+     * - возвращаем сформированный список в качестве результата работы метода. 
+     * 
      * @param words
      * @return
      */
-    public static HashMap<String, Integer> alphabet(HashMap<String, Integer> words){
-        return null;
+    public static TreeMap<String, Integer> getAlphabet(HashMap<String, Integer> words){
+        TreeMap<String, Integer> sortedTree = new TreeMap<>();
+        sortedTree.putAll(words);
+        return sortedTree;
     }
     /**
      * Статический метод, сортирует словарь попринципу обратного словаря<p>
@@ -83,7 +102,7 @@ public class Dictionary {
      * @param words
      * @return
      */
-    public static HashMap<String, Integer> alphabetReverse(HashMap<String, Integer> words){
+    public static HashMap<String, Integer> getAlphabetReverse(HashMap<String, Integer> words){
         return null;
     }
 
@@ -93,7 +112,7 @@ public class Dictionary {
      * @param words
      * @return
      */
-    public static HashMap<String, Integer> alphabetFrequency(HashMap<String, Integer> words){
+    public static HashMap<String, Integer> getAlphabetFrequency(HashMap<String, Integer> words){
         return null;
     }
 
@@ -120,5 +139,18 @@ public class Dictionary {
      */
     public HashMap<String, Integer> getWords() {
         return words;
+    }
+
+    /**
+     * преобразовываем HashMap в строку для записи в файл
+     * @param sourceMap
+     * @return
+     */
+    public static String toString(HashMap<String, Integer> sourceMap){
+        String content = "";//результирующая строка для записи в файл
+        for (Map.Entry<String, Integer> entry : sourceMap.entrySet()) {
+            content = content + entry.getKey() + " : " + entry.getValue() + "\n";
+        }
+        return content;
     }
 }
