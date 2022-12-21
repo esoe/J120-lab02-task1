@@ -1,0 +1,31 @@
+@startuml
+title "class-diagram: private Dictionary"
+class Runner{
+    Storage storage
+    Dictionary dictionary
+    void hello()
+    void main()
+}
+interface StorageFace{
+    String source
+    String storage
+    String getStorage()
+    void setStorage(String path)
+    void get(String path)
+    void put(File file)
+}
+interface UserFace{
+    void setSourcePath(String path)
+    void showPaths()
+    void showReports()
+    void repeat()
+    void help()
+    void quit()
+}
+class Dictionary{
+    HashMap words
+    StringBuilder text
+    Dictionary()
+}
+
+@enduml
